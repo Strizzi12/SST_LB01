@@ -16,8 +16,8 @@ namespace Logging
 	class Functions
 	{
 	public:
-		// Returns a + b
 		static LOGGING_API void printVersion();
+		static LOGGING_API void printError(char*);
 	};
 
 
