@@ -18,5 +18,6 @@ int main()
 	auto d = MathLibrary::Functions::Add(double(a), double(b));
 	cout << d << endl;
 
+
 	return 0;
 }
