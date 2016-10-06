@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}</ProjectGuid>
+    <ProjectGuid>{B64A0809-1303-422C-A269-85355C7EAFDA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MathClient</RootNamespace>
+    <RootNamespace>BankClient</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>MathApplication</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\MathLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Transaction;..\Logging;..\Customer;..\Accounts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,7 +150,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bankclient.cpp" />
+    <ClCompile Include="BankClient.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -160,8 +159,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MathLibrary\MathLibrary.vcxproj">
-      <Project>{80c8f5cb-fe02-40d1-9311-9a14762580ca}</Project>
+    <ProjectReference Include="..\Accounts\Accounts.vcxproj">
+      <Project>{1cc97ffa-40b7-42b2-8920-ad047ef313cf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer\Customer.vcxproj">
+      <Project>{c8e9f50b-d24a-419d-913c-4380b636e169}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.vcxproj">
+      <Project>{28e0cf0c-93cb-4755-9491-e6cc4a27ba7b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Transaction\Transaction.vcxproj">
+      <Project>{73245da1-7ddc-409c-a208-363f684205b6}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
