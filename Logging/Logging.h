@@ -17,7 +17,7 @@ namespace Logging
 	{
 	public:
 		static LOGGING_API void printVersion();
-		static LOGGING_API void printError(char*);
+		static LOGGING_API void logError(char*);
 	};
 
 

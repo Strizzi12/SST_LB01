@@ -13,19 +13,13 @@ using namespace std;
 
 int main()
 {
-
-
-
 	Logging::Functions::printVersion();
 	Customer::Functions::printVersion();
 	Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
-	char* tmp = "TestText!";
-	Logging::Functions::printError(tmp);
-
-	getchar();
-
-    return 0;
 	
+	
+	Logging::Functions::logError("Main terminated correctly");
+    return 0;
 }
 
