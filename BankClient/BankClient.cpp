@@ -18,11 +18,9 @@ int main()
 	Customer::Functions::printVersion();
 	Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
-	Datacontrol::Functions::printVersion();
-
-	Datacontrol::Functions::createDatabase();
-
-    return 0;
 	
+	
+	Logging::Functions::logError("Main terminated correctly");
+    return 0;
 }
 

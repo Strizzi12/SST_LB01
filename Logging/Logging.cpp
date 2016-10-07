@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Logging.h"
+#include <fstream>
+
+using namespace std;
 
 namespace Logging
 {
@@ -11,5 +14,28 @@ namespace Logging
 	{
 		printf(buildString);
 	}
+
+	void Functions::logError(char* errorText)
+	{
+		ofstream logFile;
+		logFile.exceptions(ofstream::failbit | ofstream::badbit);
+
+		try
+		{
+			logFile.open("LogFile.txt", fstream::app);
+			logFile << "[" << __DATE__ << ", " __TIME__ << "] - " << errorText << endl;
+			logFile.close();
+		}
+		//general ex handling -> not nice, but works, use carefully
+		catch (...)
+		{
+			cout << "Exception opening/writing Logfile!" << endl;
+			return;
+		}
+
+		
+	}
+
+
 
 }
