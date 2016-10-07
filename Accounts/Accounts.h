@@ -19,7 +19,7 @@ namespace Accounts
 		int ownerCustNumber;
 		int otherUsers[1];
 		int *userNumbers;
-		userNumbers = otherUsers;
+		//userNumbers = otherUsers;
 	};
 	//typedef struct Account Acc;
 

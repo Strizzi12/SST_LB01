@@ -22,6 +22,7 @@ int main()
 	Transaction::Functions::printVersion();
 	char* tmp = "TestText!";
 	Logging::Functions::printError(tmp);
+	Accounts::Functions::createAcc(1, 1, "TestAcc");
 
 	getchar();
 
