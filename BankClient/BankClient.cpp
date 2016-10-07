@@ -8,6 +8,7 @@
 #include "Transaction.h"
 #include "Customer.h"
 #include "Accounts.h"
+#include "Datacontrol.h"
 
 using namespace std;
 
@@ -17,6 +18,9 @@ int main()
 	Customer::Functions::printVersion();
 	Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
+	Datacontrol::Functions::printVersion();
+
+	Datacontrol::Functions::createDatabase();
 
     return 0;
 	
