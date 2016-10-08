@@ -2,12 +2,13 @@
 //
 
 #include "stdafx.h"
+
 #include <iostream>
 #include "Logging.h"
 #include "Transaction.h"
 #include "Customer.h"
 #include "Accounts.h"
-#include "XML.h"
+#include "Datacontrol.h"
 
 using namespace std;
 
@@ -17,10 +18,16 @@ int main()
 	Customer::Functions::printVersion();
 	Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
-	Xml::Functions::printVersion();
+
+	char* tmp = "TestText!";
+	Logging::Functions::logError(tmp);
+	cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
+
+	getchar();
+
+    return 0;
 	
-	
-	Logging::Functions::logError("Main terminated correctly", __FILE__);
+	Logging::Functions::logError("Main terminated correctly");
     return 0;
 }
 

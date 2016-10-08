@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include "Logging.h"
 #include "Accounts.h"
-#include <list>
 
 namespace Accounts
 {
@@ -22,6 +22,7 @@ namespace Accounts
 		acc.ownerCustNumber = _custNumber;
 		//accNumber is set from the database
 		//createNewAccount(acc);
+		Logging::Functions::logError("TestError");
 		return 0;
 	}
 	ACCOUNTS_API int Functions::deleteAcc(int _accNumber)
