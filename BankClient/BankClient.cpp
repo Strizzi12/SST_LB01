@@ -13,20 +13,20 @@ using namespace std;
 
 int main()
 {
-
-
-
 	Logging::Functions::printVersion();
 	Customer::Functions::printVersion();
 	Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
+
 	char* tmp = "TestText!";
-	Logging::Functions::printError(tmp);
-	Accounts::Functions::createAcc(1, 1, "TestAcc");
+	Logging::Functions::logError(tmp);
+	cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
 
 	getchar();
 
     return 0;
 	
+	Logging::Functions::logError("Main terminated correctly");
+    return 0;
 }
 
