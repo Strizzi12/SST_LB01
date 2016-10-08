@@ -5,8 +5,15 @@
 #include <iostream>
 #include "Logging.h"
 #include <fstream>
+#include <vector>
+#include <sstream>
+#include <cstring>
+#include <stdlib.h>
+#include <Windows.h>
+
 
 using namespace std;
+#pragma warning(disable:4996)
 
 namespace Logging
 {
@@ -15,7 +22,7 @@ namespace Logging
 		printf(buildString);
 	}
 
-	void Functions::logError(char* errorText)
+	void Functions::logError(char* errorText, const char* fileName)
 	{
 		ofstream logFile;
 		logFile.exceptions(ofstream::failbit | ofstream::badbit);
@@ -23,17 +30,15 @@ namespace Logging
 		try
 		{
 			logFile.open("LogFile.txt", fstream::app);
-			logFile << "[" << __DATE__ << ", " __TIME__ << "] - " << errorText << endl;
+			logFile << "[" << __DATE__ << ", " __TIME__ << "] - "<< errorText << endl;
 			logFile.close();
 		}
-		//general ex handling -> not nice, but works, use carefully
+		//general ex handling -> not nice but works, use carefully
 		catch (...)
 		{
 			cout << "Exception opening/writing Logfile!" << endl;
 			return;
 		}
-
-		
 	}
 
 
