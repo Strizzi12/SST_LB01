@@ -18,16 +18,11 @@ int main()
 	Customer::Functions::printVersion();
 	Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
+	Logging::Functions::printVersion();
 
-	char* tmp = "TestText!";
-	Logging::Functions::logError(tmp);
 	cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
-
-	getchar();
-
-    return 0;
-	
-	Logging::Functions::logError("Main terminated correctly");
+			
+	Logging::Functions::logError("Main terminated correctly", __FILE__);
     return 0;
 }
 

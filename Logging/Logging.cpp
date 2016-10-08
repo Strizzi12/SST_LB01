@@ -5,11 +5,9 @@
 #include <iostream>
 #include "Logging.h"
 #include <fstream>
-#include <vector>
 #include <sstream>
-#include <cstring>
 #include <stdlib.h>
-#include <Windows.h>
+#include <stdio.h>
 
 
 using namespace std;
@@ -29,8 +27,22 @@ namespace Logging
 
 		try
 		{
+			string onlyFileName;
+			string strPath(fileName);
+
+			//retrieving filename from fullpath (http://stackoverflow.com/questions/5523042/how-to-get-the-stem-of-a-filename-from-a-path)
+			size_t pos = strPath.find_last_of("\\");
+			if (pos != std::string::npos)
+			{
+				onlyFileName.assign(strPath.begin() + pos + 1, strPath.end());
+			}
+			else
+			{
+				onlyFileName = strPath;
+			}
+
 			logFile.open("LogFile.txt", fstream::app);
-			logFile << "[" << __DATE__ << ", " __TIME__ << "] - "<< errorText << endl;
+			logFile << "[" << __DATE__ << ", " __TIME__ << "] - " << onlyFileName << " - " << errorText << endl;
 			logFile.close();
 		}
 		//general ex handling -> not nice but works, use carefully
