@@ -7,8 +7,7 @@
 #define ACCOUNTS_API __declspec(dllimport) 
 #endif
 
-namespace Accounts
-{
+
 	const char *buildString = "Accounts 1.0 " __DATE__ ", " __TIME__ "\n";
 
 	struct Account
@@ -23,15 +22,10 @@ namespace Accounts
 	};
 	//typedef struct Account Acc;
 
-	class Functions
-	{
-	public:
-		static ACCOUNTS_API void printVersion();
-		static ACCOUNTS_API int createAcc(int _custNumber, int _accType, char* _accName);
-		static ACCOUNTS_API int deleteAcc(int _accNumber);
-		static ACCOUNTS_API int editAccName(int _accNumber, char* _newName);
-		static ACCOUNTS_API int addUserToAcc(int _accNumber, int _custNumber);
-		static ACCOUNTS_API int removeUserFromAcc(int _accNumber, int _custNumber);
-		static ACCOUNTS_API int changeAccOwner(int _accNumber, int _custNumberFrom, int _custNumberTo);
-	};
-}
+	extern "C" ACCOUNTS_API void printVersion();
+	extern "C" ACCOUNTS_API int createAcc(int _custNumber, int _accType, char* _accName);
+	extern "C" ACCOUNTS_API int deleteAcc(int _accNumber);
+	extern "C" ACCOUNTS_API int editAccName(int _accNumber, char* _newName);
+	extern "C" ACCOUNTS_API int addUserToAcc(int _accNumber, int _custNumber);
+	extern "C" ACCOUNTS_API int removeUserFromAcc(int _accNumber, int _custNumber);
+	extern "C" ACCOUNTS_API int changeAccOwner(int _accNumber, int _custNumberFrom, int _custNumberTo);
