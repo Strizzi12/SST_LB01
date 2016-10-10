@@ -22,7 +22,7 @@ namespace Accounts
 		acc.ownerCustNumber = _custNumber;
 		//accNumber is set from the database
 		//createNewAccount(acc);
-		Logging::Functions::logError("TestError", __FILE__);
+		
 		return 0;
 	}
 	ACCOUNTS_API int Functions::deleteAcc(int _accNumber)
