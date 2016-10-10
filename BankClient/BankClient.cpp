@@ -18,9 +18,11 @@ int main()
 	Customer::Functions::printVersion();
 	// Accounts::Functions::printVersion();
 	Transaction::Functions::printVersion();
-	
-	
-	Logging::Functions::logError("Main terminated correctly");
+	Logging::Functions::printVersion();
+
+	cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
+			
+	Logging::Functions::logError("Main terminated correctly", __FILE__);
     return 0;
 }
 

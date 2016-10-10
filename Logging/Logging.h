@@ -15,9 +15,10 @@ namespace Logging
 	// This class is exported from the LOGGING.dll
 	class Functions
 	{
+
 	public:
 		static LOGGING_API void printVersion();
-		static LOGGING_API void logError(char*);
+		static LOGGING_API void logError(char*, const char*);
 	};
 
 

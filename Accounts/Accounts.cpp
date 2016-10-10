@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include "Logging.h"
 #include "Accounts.h"
-#include <list>
 
 
 
@@ -18,6 +18,7 @@
 		acc.ownerCustNumber = _custNumber;
 		//accNumber is set from the database
 		//createNewAccount(acc);
+		
 		return 0;
 	}
 	ACCOUNTS_API int deleteAcc(int _accNumber)
