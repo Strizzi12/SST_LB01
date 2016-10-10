@@ -20,14 +20,14 @@ int main()
 	Transaction::Functions::printVersion();
 
 	char* tmp = "TestText!";
-	Logging::Functions::logError(tmp);
+	Logging::Functions::logError(tmp, __FILE__);
 	cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
 
 	getchar();
 
     return 0;
 	
-	Logging::Functions::logError("Main terminated correctly");
+	Logging::Functions::logError("Main terminated correctly", __FILE__);
     return 0;
 }
 
