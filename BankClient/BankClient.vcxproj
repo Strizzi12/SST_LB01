@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Transaction;..\Logging;..\Customer;..\Accounts;..\Datacontrol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\XMLControler;..\Transaction;..\Logging;..\Customer;..\Accounts;..\Datacontrol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,6 +173,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Transaction\Transaction.vcxproj">
       <Project>{73245da1-7ddc-409c-a208-363f684205b6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLControler\XMLControler.vcxproj">
+      <Project>{5390dacd-316c-4a71-877e-115d36101121}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
