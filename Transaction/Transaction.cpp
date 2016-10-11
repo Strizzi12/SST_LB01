@@ -7,11 +7,7 @@
 #include "Transaction.h"
 
 
-namespace Transaction
+TRANSACTION_API void transaction_printVersion()
 {
-	void Functions::printVersion()
-	{
-		printf(buildString);
-	}
-
+	printf(transaction_buildString);
 }

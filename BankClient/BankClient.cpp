@@ -14,15 +14,13 @@ using namespace std;
 
 int main()
 {
-	Logging::Functions::printVersion();
-	Customer::Functions::printVersion();
-	// Accounts::Functions::printVersion();
-	Transaction::Functions::printVersion();
-	Logging::Functions::printVersion();
 
-	cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
+	logging_printVersion();
+	transaction_printVersion();
+	
+	//cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
 			
-	Logging::Functions::logError("Main terminated correctly", __FILE__);
+	logging_logError("Main terminated correctly", __FILE__);
     return 0;
 }
 

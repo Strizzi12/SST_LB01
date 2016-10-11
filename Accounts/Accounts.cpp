@@ -8,7 +8,7 @@
 
 
 
-ACCOUNTS_API int createAcc(int _custNumber, int _accType, char* _accName)
+ACCOUNTS_API int accounts_createAcc(int _custNumber, int _accType, char* _accName)
 {
 	if (*_accName == NULL || sizeof(_accName) == 0)
 		return -1;
@@ -21,28 +21,28 @@ ACCOUNTS_API int createAcc(int _custNumber, int _accType, char* _accName)
 
 	return 0;
 }
-ACCOUNTS_API int deleteAcc(int _accNumber)
+ACCOUNTS_API int accounts_deleteAcc(int _accNumber)
 {
 	if (_accNumber <= 0)
 		return -1;
 	//deleteAcc
 	return 0;
 }
-ACCOUNTS_API int editAccName(int _accNumber, char* _newName)
+ACCOUNTS_API int accounts_editAccName(int _accNumber, char* _newName)
 {
 	if (*_newName == NULL || sizeof(_newName) == 0 || _accNumber <= 0)
 		return -1;
 	return 0;
 }
-ACCOUNTS_API int addUserToAcc(int _accNumber, int _custNumber)
+ACCOUNTS_API int accounts_addUserToAcc(int _accNumber, int _custNumber)
 {
 	return 0;
 }
-ACCOUNTS_API int removeUserFromAcc(int _accNumber, int _custNumber)
+ACCOUNTS_API int accounts_removeUserFromAcc(int _accNumber, int _custNumber)
 {
 	return 0;
 }
-ACCOUNTS_API int changeAccOwner(int _accNumber, int _custNumberFrom, int _custNumberTo)
+ACCOUNTS_API int accounts_changeAccOwner(int _accNumber, int _custNumberFrom, int _custNumberTo)
 {
 	return 0;
 }
