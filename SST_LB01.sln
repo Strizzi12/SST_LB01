@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample_Library", "MathLibrary\MathLibrary.vcxproj", "{80C8F5CB-FE02-40D1-9311-9A14762580CA}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathApplication", "MathClient\MathClient.vcxproj", "{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BankClient", "BankClient\BankClient.vcxproj", "{B64A0809-1303-422C-A269-85355C7EAFDA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Customer", "Customer\Customer.vcxproj", "{C8E9F50B-D24A-419D-913C-4380B636E169}"
@@ -27,22 +23,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Debug|x64.ActiveCfg = Debug|x64
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Debug|x64.Build.0 = Debug|x64
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Debug|x86.ActiveCfg = Debug|Win32
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Debug|x86.Build.0 = Debug|Win32
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Release|x64.ActiveCfg = Release|x64
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Release|x64.Build.0 = Release|x64
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Release|x86.ActiveCfg = Release|Win32
-		{80C8F5CB-FE02-40D1-9311-9A14762580CA}.Release|x86.Build.0 = Release|Win32
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Debug|x64.ActiveCfg = Debug|x64
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Debug|x64.Build.0 = Debug|x64
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Debug|x86.ActiveCfg = Debug|Win32
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Debug|x86.Build.0 = Debug|Win32
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Release|x64.ActiveCfg = Release|x64
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Release|x64.Build.0 = Release|x64
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Release|x86.ActiveCfg = Release|Win32
-		{B8B075F1-F86D-4DC6-9690-4F5019E62E5A}.Release|x86.Build.0 = Release|Win32
 		{B64A0809-1303-422C-A269-85355C7EAFDA}.Debug|x64.ActiveCfg = Debug|x64
 		{B64A0809-1303-422C-A269-85355C7EAFDA}.Debug|x64.Build.0 = Debug|x64
 		{B64A0809-1303-422C-A269-85355C7EAFDA}.Debug|x86.ActiveCfg = Debug|Win32
