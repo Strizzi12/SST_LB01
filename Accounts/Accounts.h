@@ -8,24 +8,24 @@
 #endif
 
 
-	const char *buildString = "Accounts 1.0 " __DATE__ ", " __TIME__ "\n";
+const char *accounts_buildString = "Accounts 1.0 " __DATE__ ", " __TIME__ "\n";
 
-	struct Account
-	{
-		char accName[100];
-		int accNumber;
-		int accType;
-		int ownerCustNumber;
-		int otherUsers[1];
-		int *userNumbers;
-		//userNumbers = otherUsers;
-	};
-	//typedef struct Account Acc;
+struct Account
+{
+	char accName[100];
+	int accNumber;
+	int accType;
+	int ownerCustNumber;
+	int otherUsers[1];
+	int *userNumbers;
+	//userNumbers = otherUsers;
+};
+//typedef struct Account Acc;
 
-	extern "C" ACCOUNTS_API void printVersion();
-	extern "C" ACCOUNTS_API int createAcc(int _custNumber, int _accType, char* _accName);
-	extern "C" ACCOUNTS_API int deleteAcc(int _accNumber);
-	extern "C" ACCOUNTS_API int editAccName(int _accNumber, char* _newName);
-	extern "C" ACCOUNTS_API int addUserToAcc(int _accNumber, int _custNumber);
-	extern "C" ACCOUNTS_API int removeUserFromAcc(int _accNumber, int _custNumber);
-	extern "C" ACCOUNTS_API int changeAccOwner(int _accNumber, int _custNumberFrom, int _custNumberTo);
+extern "C" ACCOUNTS_API void accounts_printVersion();
+extern "C" ACCOUNTS_API int accounts_createAcc(int _custNumber, int _accType, char* _accName);
+extern "C" ACCOUNTS_API int accounts_deleteAcc(int _accNumber);
+extern "C" ACCOUNTS_API int accounts_(int _accNumber, char* _newName);
+extern "C" ACCOUNTS_API int accounts_addUserToAcc(int _accNumber, int _custNumber);
+extern "C" ACCOUNTS_API int accounts_removeUserFromAcc(int _accNumber, int _custNumber);
+extern "C" ACCOUNTS_API int accounts_changeAccOwner(int _accNumber, int _custNumberFrom, int _custNumberTo);

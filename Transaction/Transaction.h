@@ -8,17 +8,9 @@
 #endif
 
 
+const char *transaction_buildString = "Transaction 1.0 " __DATE__ ", " __TIME__ "\n";
 
-namespace Transaction
-{
-	const char *buildString = "Transaction 1.0 " __DATE__ ", " __TIME__ "\n";
-	// This class is exported from the LOGGING.dll
-	class Functions
-	{
-	public:
-		// Returns a + b
-		static TRANSACTION_API void printVersion();
-	};
+extern "C" TRANSACTION_API void transaction_printVersion();
 
 
-}
+

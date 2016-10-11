@@ -7,19 +7,10 @@
 #define LOGGING_API __declspec(dllimport) 
 #endif
 
+const char *logging_buildString = "Logging 1.0 " __DATE__ ", " __TIME__ "\n";
+
+extern "C" LOGGING_API void logging_printVersion();
+extern "C" LOGGING_API void logging_logError(char*, const char*);
 
 
-namespace Logging
-{
-	const char *buildString = "Logging 1.0 " __DATE__ ", " __TIME__ "\n";
-	// This class is exported from the LOGGING.dll
-	class Functions
-	{
 
-	public:
-		static LOGGING_API void printVersion();
-		static LOGGING_API void logError(char*, const char*);
-	};
-
-
-}
