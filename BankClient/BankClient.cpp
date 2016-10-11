@@ -9,6 +9,7 @@
 #include "Customer.h"
 #include "Accounts.h"
 #include "Datacontrol.h"
+#include "XMLControler.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ int main()
 
 	logging_printVersion();
 	transaction_printVersion();
+	xmlcontroler_printVersion();
 	
 	//cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
 			
