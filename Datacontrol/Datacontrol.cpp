@@ -1,9 +1,14 @@
 
+
 #include "stdafx.h"
 #include <iostream>
+#include <string>
 #include "Datacontrol.h"
+#include "Logging.h"
 #include "sqlite3.h"
 
+using namespace std;
+#pragma warning(disable:4996)
 
 DATACONTROL_API void datacontrol_printVersion()
 {
@@ -13,7 +18,15 @@ DATACONTROL_API void datacontrol_printVersion()
 DATACONTROL_API int createDatabase(char *dbName)
 {
 	sqlite3 *db;
-	int rc = sqlite3_open(dbName, &db);
+	/* Open database */
+	//string databaseName = *dbName + ".db";
+	//rc = sqlite3_open(databaseName.c_str(), &db);
+
+	char * str3 = (char *)malloc(1 + strlen(dbName) + strlen(".db"));
+	strcpy(str3, dbName);
+	strcat(str3, ".db");
+
+	int rc = sqlite3_open(str3, &db);
 	if (rc != SQLITE_OK)
 		return -1;
 	else
@@ -26,10 +39,13 @@ DATACONTROL_API ResultSet execQuery(char *dbName, char *sqlStatement)
 	ResultSet *resultPtr = &result;
 	sqlite3 *db;
 	char *zErrMsg = 0;
-	int rc;
 
 	/* Open database */
-	rc = sqlite3_open(dbName, &db);
+	char * str3 = (char *)malloc(1 + strlen(dbName) + strlen(".db"));
+	strcpy(str3, dbName);
+	strcat(str3, ".db");
+
+	int rc = sqlite3_open(str3, &db);
 	if(rc != SQLITE_OK)	
 	{
 		result.errorCode = -1;
@@ -40,10 +56,9 @@ DATACONTROL_API ResultSet execQuery(char *dbName, char *sqlStatement)
 	rc = sqlite3_exec(db, sqlStatement, callback, (void *)resultPtr, &zErrMsg);
 	if (rc != SQLITE_OK) 
 	{
-		fprintf(stderr, "SQL error: %s\n", zErrMsg);
-		//Write to logfile
+		logging_logError("SQL error: %s\n", zErrMsg);	//Write to logfile
 		sqlite3_free(zErrMsg);
-		result.errorCode = -2;
+		result.errorCode = -2;							//Errorcode -2 = SQL statement execution failure
 		return result;
 	}
 	else //SUCCESS

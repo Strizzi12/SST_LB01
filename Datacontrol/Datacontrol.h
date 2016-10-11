@@ -22,6 +22,6 @@ const char *buildString = "Datacontrol 1.0 " __DATE__ ", " __TIME__ "\n";
 
 static int callback(void *data, int argc, char **argv, char **azColName);
 
-extern "C" DATACONTROL_API void printVersion();
+extern "C" DATACONTROL_API void datacontrol_printVersion();
 extern "C" DATACONTROL_API int createDatabase(char *dbName);
 extern "C" DATACONTROL_API ResultSet execQuery(char *dbName, char *sqlStatement);
