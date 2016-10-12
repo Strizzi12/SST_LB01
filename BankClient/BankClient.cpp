@@ -1,5 +1,4 @@
 // BankClient.cpp : Defines the entry point for the console application.
-//
 
 #include "stdafx.h"
 #include <iostream>
@@ -10,6 +9,7 @@
 #include "Datacontrol.h"
 #include "SQLcontrol.h"
 #include <string>
+
 
 using namespace std;
 #pragma warning(disable:4996)
@@ -39,6 +39,8 @@ int main()
 
 	logging_printVersion();
 	transaction_printVersion();
+	
+	xmlcontroler_createCustomer("Mike", "Thomas");
 	
 	//cout << Accounts::Functions::createAcc(1, 1, "Funkt") << endl;
 			
