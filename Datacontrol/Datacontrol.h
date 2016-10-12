@@ -1,4 +1,4 @@
-// SQLcontrol.h - Contains declaration of Function class
+// Datacontrol.h - Contains declaration of Function class
 #pragma once
 #include "sqlite3.h"
 
@@ -8,6 +8,9 @@
 #define DATACONTROL_API __declspec(dllimport) 
 #endif
 
+//const char *buildString = "Datacontrol 1.0 " __DATE__ ", " __TIME__ "\n";
+
+/*
 struct ResultSet
 {
 	int rows;
@@ -18,10 +21,11 @@ struct ResultSet
 };
 typedef ResultSet Resultset;
 
-const char *buildString = "Datacontrol 1.0 " __DATE__ ", " __TIME__ "\n";
+
 
 static int callback(void *data, int argc, char **argv, char **azColName);
 
 extern "C" DATACONTROL_API void datacontrol_printVersion();
 extern "C" DATACONTROL_API int createDatabase(char *dbName);
 extern "C" DATACONTROL_API ResultSet execQuery(char *dbName, char *sqlStatement);
+*/

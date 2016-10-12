@@ -2,13 +2,13 @@
 //
 
 #include "stdafx.h"
-
 #include <iostream>
 #include "Logging.h"
 #include "Transaction.h"
 #include "Customer.h"
 #include "Accounts.h"
 #include "Datacontrol.h"
+#include "SQLcontrol.h"
 #include <string>
 
 using namespace std;
@@ -19,7 +19,7 @@ int main()
 	char *sql;
 	ResultSet result;
 	char snum[20];
-	//sql = "Test;";
+	sql = "Test;";
 	/*sql = "CREATE TABLE COMPANY("  \
 		"ID INT PRIMARY KEY     NOT NULL," \
 		"NAME           TEXT    NOT NULL," \
@@ -44,8 +44,8 @@ int main()
 			
 	logging_logError("Main terminated correctly", __FILE__);
 
-	if (createDatabase("myDatabase") == SQLITE_OK)
-		result = execQuery("myDatabase", sql);
+	if (sql_createDatabase("myDatabase") == SQLITE_OK)
+		result = sql_execQuery("myDatabase", sql);
 	
 	char myString[100] = "Error Code: ";
 	_itoa(result.errorCode, snum, 10);
