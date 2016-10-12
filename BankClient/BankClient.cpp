@@ -8,6 +8,7 @@
 #include "Accounts.h"
 #include "Datacontrol.h"
 #include <string>
+#include "XMLControler.h"
 
 
 using namespace std;
@@ -45,12 +46,12 @@ int main()
 			
 	logging_logError("Main terminated correctly", __FILE__);
 
-	if (createDatabase("myDatabase") == SQLITE_OK)
-		result = execQuery("myDatabase", sql);
+	//if (createDatabase("myDatabase") == SQLITE_OK)
+		//result = execQuery("myDatabase", sql);
 	
 	char myString[100] = "Error Code: ";
-	_itoa(result.errorCode, snum, 10);
-	strcat(myString, snum);
+	//_itoa(result.errorCode, snum, 10);
+	//strcat(myString, snum);
 
 	logging_logError(myString,  __FILE__);
 
