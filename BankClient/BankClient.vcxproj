@@ -167,9 +167,6 @@
     <ProjectReference Include="..\Customer\Customer.vcxproj">
       <Project>{c8e9f50b-d24a-419d-913c-4380b636e169}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Datacontrol\Datacontrol.vcxproj">
-      <Project>{493f55a5-d4ae-4288-9c15-7b74e3b7f673}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.vcxproj">
       <Project>{28e0cf0c-93cb-4755-9491-e6cc4a27ba7b}</Project>
     </ProjectReference>
