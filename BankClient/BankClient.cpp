@@ -7,6 +7,7 @@
 #include "Customer.h"
 #include "Accounts.h"
 #include "Datacontrol.h"
+#include "SQLcontrol.h"
 #include <string>
 #include "XMLControler.h"
 
@@ -19,7 +20,7 @@ int main()
 	char *sql;
 	ResultSet result;
 	char snum[20];
-	//sql = "Test;";
+	sql = "Test;";
 	/*sql = "CREATE TABLE COMPANY("  \
 		"ID INT PRIMARY KEY     NOT NULL," \
 		"NAME           TEXT    NOT NULL," \

@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\XMLControler;..\Transaction;..\Logging;..\Customer;..\Accounts;..\Datacontrol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\SQLcontrol;..\XMLControler;..\Transaction;..\Logging;..\Customer;..\Accounts;..\Datacontrol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\SQLcontrol;..\XMLControler;..\Transaction;..\Datacontrol;..\Logging;..\Customer;..\Accounts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,6 +172,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.vcxproj">
       <Project>{28e0cf0c-93cb-4755-9491-e6cc4a27ba7b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLcontrol\SQLcontrol.vcxproj">
+      <Project>{8abe6327-5133-4ba6-869a-06dcfe4bd817}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Transaction\Transaction.vcxproj">
       <Project>{73245da1-7ddc-409c-a208-363f684205b6}</Project>

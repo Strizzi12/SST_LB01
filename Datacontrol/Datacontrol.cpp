@@ -9,7 +9,7 @@
 
 using namespace std;
 #pragma warning(disable:4996)
-
+/*
 DATACONTROL_API void datacontrol_printVersion()
 {
 	printf(buildString);
@@ -18,7 +18,7 @@ DATACONTROL_API void datacontrol_printVersion()
 DATACONTROL_API int createDatabase(char *dbName)
 {
 	sqlite3 *db;
-	/* Open database */
+	/* Open database 
 	//string databaseName = *dbName + ".db";
 	//rc = sqlite3_open(databaseName.c_str(), &db);
 
@@ -40,7 +40,7 @@ DATACONTROL_API ResultSet execQuery(char *dbName, char *sqlStatement)
 	sqlite3 *db;
 	char *zErrMsg = 0;
 
-	/* Open database */
+	/* Open database 
 	char * str3 = (char *)malloc(1 + strlen(dbName) + strlen(".db"));
 	strcpy(str3, dbName);
 	strcat(str3, ".db");
@@ -52,7 +52,7 @@ DATACONTROL_API ResultSet execQuery(char *dbName, char *sqlStatement)
 		return result;
 	}
 
-	/* Execute SQL statement */
+	/* Execute SQL statement 
 	rc = sqlite3_exec(db, sqlStatement, callback, (void *)resultPtr, &zErrMsg);
 	if (rc != SQLITE_OK) 
 	{
@@ -76,3 +76,4 @@ static int callback(void *data, int argc, char **argv, char **azColName)
 	resultPtr->data = argv;
 	return 0;
 }
+*/
