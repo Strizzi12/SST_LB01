@@ -12,7 +12,7 @@ ACCOUNTS_API int accounts_createAcc(int _custNumber, int _accType, char* _accNam
 {
 	if (*_accName == NULL || sizeof(_accName) == 0)
 		return -1;
-	struct Account acc;
+	struct BankAccount acc;
 	strcpy_s(acc.accName, _accName);
 	acc.accType = _accType;
 	acc.ownerCustNumber = _custNumber;

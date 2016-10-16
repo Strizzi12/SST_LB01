@@ -10,7 +10,7 @@
 
 const char *accounts_buildString = "Accounts 1.0 " __DATE__ ", " __TIME__ "\n";
 
-struct Account
+struct BankAccount
 {
 	char accName[100];
 	int accNumber;
