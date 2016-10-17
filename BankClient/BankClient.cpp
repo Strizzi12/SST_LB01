@@ -9,6 +9,7 @@
 #include "SQLcontrol.h"
 #include <string>
 #include "XMLControler.h"
+#include "CurrencyExchange.h"
 
 using namespace std;
 #pragma warning(disable:4996)
@@ -37,7 +38,11 @@ int main()
 	xmlcontroler_attachAccount(0, 2);
 	xmlcontroler_attachAccount(0, 2);
 	//xmlcontroler_attachAccount(1, 2);
-	
+
+	double oldAmount = 3.57;
+	double newAmount = currencyExchange_exchange(oldAmount, 0, 1);
+
+	printf("Betrag in Euro: %f, in USD = %f \n", oldAmount, newAmount);
 
 	logging_logError("Main terminated correctly", __FILE__);
 	
