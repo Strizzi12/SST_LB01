@@ -11,45 +11,16 @@
 
 using namespace std;
 
-struct ResultSet
-{
-	int rows;
-	char **columns;
-	char **data;
-	int errorCode;
-};
-typedef ResultSet Resultset;
-
 const char *buildString = "SQLontrol 1.0 " __DATE__ ", " __TIME__ "\n";
+
+struct mytable 
+{
+	char ***data;
+	size_t dim;
+};
 
 static int callback(void *data, int argc, char **argv, char **azColName);
 
-class Result
-{
-	typedef list<string> myList;
-	public:
-		int rows;
-		int errorCode;
-		Result::Result()
-		{
-
-		}
-
-		Result::~Result()
-		{
-
-		}
-
-		void addColumns(string toAdd);
-
-		void addData(string toAdd);
-
-	private:
-		myList dataList;
-		myList nameOfColumnsList;
-};
-
-
 extern "C" SQLCONTROL_API void SQLcontrol_printVersion();
 extern "C" SQLCONTROL_API int sql_createDatabase(char *dbName);
-extern "C" SQLCONTROL_API Result sql_execQuery(char *dbName, char *sqlStatement);
+extern "C" SQLCONTROL_API char*** sql_execQuery(char *dbName, char *sqlStatement);
