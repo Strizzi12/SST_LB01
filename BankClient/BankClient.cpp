@@ -3,11 +3,9 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Logging.h"
-#include "Datacontrol.h"
 #include "SQLcontrol.h"
 #include <string>
 #include "XMLControler.h"
-#include "CurrencyExchange.h"
 
 using namespace std;
 #pragma warning(disable:4996)
@@ -15,6 +13,79 @@ using namespace std;
 int main()
 {
 	logging_printVersion();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	char *sql2;
 	char *sql3;
@@ -64,12 +135,6 @@ int main()
 	else
 		result = ResultSet{ NULL, 0, 0 };
 
-	double oldAmount = 3.57;
-	double newAmount = currencyExchange_exchange(oldAmount, 0, 1);
-
-	printf("Betrag in Euro: %f, in USD = %f \n", oldAmount, newAmount);
-
-	
 	for (unsigned int j = 0; j < result.rows; j++)
 	{
 		for (unsigned int k = 0; k < result.cols; k++)
