@@ -20,11 +20,17 @@
 
 #include <list>
 #include <fstream>
+#include <sstream>
+#include <string>
 #include <iostream>
+#include <vector>
+#include <sstream>
+#include <ctime>
 
 const char *xmlcontroler_buildString = "XMLControler 1.0 " __DATE__ ", " __TIME__ "\n";
 const int MAXACCNR = 10;
 
+#pragma region INTERFACES
 extern "C" XMLCONTROLER_API void xmlcontroler_printVersion();
 extern "C" XMLCONTROLER_API int xmlcontroler_createCustomer(char* firstName, char* lastname, char* tmpplzOrt, char* tmpstrasse, int tmphausNr);
 extern "C" XMLCONTROLER_API bool xmlcontroler_deleteCustomerByID(int ID);
@@ -33,9 +39,15 @@ extern "C" XMLCONTROLER_API int xmlcontroler_updateCustomer(int cusID, char* fir
 extern "C" XMLCONTROLER_API int xmlcontroler_renameCustomer(int cusID, char* firstName, char* lastname);
 extern "C" XMLCONTROLER_API int xmlcontroler_createAccount(int tmpType, float tmpValue);
 extern "C" XMLCONTROLER_API int xmlcontroler_closeAccount(int tmpAccID);
-extern "C" XMLCONTROLER_API int xmlcontroler_manageAccount(int tmpType);
+extern "C" XMLCONTROLER_API int xmlcontroler_manageAccount(int tmpAccID, int tmpType);
 extern "C" XMLCONTROLER_API bool xmlcontroler_attachAccount(int tmpAccID, int tmpCusID);
 extern "C" XMLCONTROLER_API bool xmlcontroler_dettachAccount(int tmpAccID, int tmpCusID);
+extern "C" XMLCONTROLER_API bool xmlcontroler_transferMoney(int tmpFromAccID, int tmpToAccID, float tmpValue);
+extern "C" XMLCONTROLER_API bool xmlcontroler_depositMoney(int tmpAccID, float tmpValue);
+extern "C" XMLCONTROLER_API bool xmlcontroler_withdrawMoney(int tmpAccID, float tmpValue);
+extern "C" XMLCONTROLER_API bool xmlcontroler_getBankStatement(int tmpAccID);
+extern "C" XMLCONTROLER_API bool xmlcontroler_getBalance(int tmpCusID);
+#pragma endregion
 
 using namespace std;
 
@@ -51,6 +63,16 @@ public:
 	int get_accID()
 	{
 		return accID;
+	}
+
+	float get_value()
+	{
+		return value;
+	}
+
+	list<string>* get_transactions()
+	{
+		return &transaction;
 	}
 
 #pragma endregion
@@ -75,6 +97,16 @@ public:
 	{
 		ownerIDs.remove(tmpOwnerID);
 	}
+
+	void set_value(float tmpValue)
+	{
+		value = tmpValue;
+	}
+
+	/*void add_transaction(string tmpTransactionString)
+	{
+		transaction.push_back(tmpTransactionString);
+	}*/
 
 #pragma endregion
 
@@ -125,11 +157,6 @@ public:
 	MyCustomer(int tmpCusID, char* tmpFirstName, char* tmpLastName, char* tmpplzOrt, char* tmpstrasse, int tmphausNr);
 	template<class Archive>
 	void do_serialize(Archive & ar, const unsigned int version);
-
-	bool IndexGreaterThanTen(const MyCustomer& o, int delID)
-	{
-		return o.cusID == delID;
-	}
 
 #pragma region GETTER
 	int get_cusID()
