@@ -14,22 +14,22 @@ using namespace std;
 int main()
 {
 	logging_printVersion();
-	xmlcontroler_createCustomer("Mike", "Thomas", "5020 Salzburg", "strassenname", 10);
-	xmlcontroler_createCustomer("Random", "Guy", "4840 Timelkam", "sName", 100);
+	//xmlcontroler_createCustomer("Mike", "Thomas", "5020 Salzburg", "strassenname", 10);
+	//xmlcontroler_createCustomer("Random", "Guy", "4840 Timelkam", "sName", 100);
 	//xmlcontroler_createCustomer("Specific", "Girl", "4840 Voecklabruck", "anothername", 1);
 
-	xmlcontroler_createAccount(0, 100.0f);
-	xmlcontroler_createAccount(0, 100.0f);
-	xmlcontroler_createAccount(0, 100.0f);
-	xmlcontroler_createAccount(0, 100.0f);
-	xmlcontroler_createAccount(0, -100.0f);
+	//xmlcontroler_createAccount(0, 100.0f);
+	//xmlcontroler_createAccount(0, 100.0f);
+	//xmlcontroler_createAccount(0, 100.0f);
+	//xmlcontroler_createAccount(0, 100.0f);
+	//xmlcontroler_createAccount(0, -100.0f);
 
-	xmlcontroler_attachAccount(1, 0);
-	xmlcontroler_attachAccount(0, 1);
-	xmlcontroler_attachAccount(1, 1);
-	xmlcontroler_attachAccount(2, 1);
-	xmlcontroler_attachAccount(3, 1);
-	xmlcontroler_attachAccount(4, 1);
+	//xmlcontroler_attachAccount(1, 0);
+	//xmlcontroler_attachAccount(0, 1);
+	//xmlcontroler_attachAccount(1, 1);
+	//xmlcontroler_attachAccount(2, 1);
+	//xmlcontroler_attachAccount(3, 1);
+	//xmlcontroler_attachAccount(4, 1);
 
 	//xmlcontroler_dettachAccount(1, 2);
 
@@ -60,7 +60,7 @@ int main()
 	//xmlcontroler_closeAccount(0);
 
 
-	xmlcontroler_depositMoney(0, 100.0f);
+	//xmlcontroler_depositMoney(0, 100.0f);
 	//xmlcontroler_depositMoney(1, 111.0f);
 
 	//xmlcontroler_withdrawMoney(0, 100000.0f);
@@ -69,11 +69,7 @@ int main()
 	//xmlcontroler_transferMoney(0, 1, 222.0f);
 
 	//xmlcontroler_getBankStatement(0);
-	xmlcontroler_getBalance(1);
-
-	char *sql2;
-	char *sql3;
-	ResultSet result;
+	//xmlcontroler_getBalance(1);
 
 	char *sqlCreateTableCustomer = "CREATE TABLE CUSTOMER(" \
 		"CUSTID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," \
@@ -98,40 +94,40 @@ int main()
 		"FOREIGN KEY(FROMACC) REFERENCES ACCOUNT(ACCID)," \
 		"FOREIGN KEY(TOACC) REFERENCES ACCOUNT(ACCID));";
 
+	char *sqlCreateJoinAccountsTable = "CREATE TABLE JOINTABLEACCOUNTS( " \
+		"ACCID INTEGER NOT NULL," \
+		"CUSTID INTEGER NOT NULL," \
+		"primary key(CUSTID, ACCID)," \
+		"foreign key(CUSTID)" \
+		"references CUSTOMER(CUSTID)," \
+		"foreign key(ACCID)" \
+		"references ACCOUNT(ACCID));";
 
-	sql2 = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
-		"VALUES (1, 'Paul', 32, 'California', 20000.00 ); " \
-		"INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
-		"VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "     \
-		"INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
-		"VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );" \
-		"INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
-		"VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
+	sql_execQuery("Bank", sqlCreateTableAccounts);
+	sql_execQuery("Bank", sqlCreateTableCustomer);
+	sql_execQuery("Bank", sqlCreateTableTransactions);
+	sql_execQuery("Bank", sqlCreateJoinAccountsTable);
 
-	sql3 = "SELECT * from COMPANY";
+	bankControl_createAcc(1, "MyAcc1", 100);
+	bankControl_createAcc(1, "MyAcc2", 100);
+	bankControl_createAcc(1, "MyAcc3", 100);
+	//bankControl_deleteAcc(2);
+	bankControl_createCustomer("Mike", "Ich", "12.34.4567", "test", "test Straﬂe", "12a");
+	bankControl_createCustomer("Hugo", "Wer", "987.987654", "Dieser Block", "Jene Straﬂe", "12a");
+	bankControl_renameAcc(1, "NewAccName");
+	bankControl_addUserToAcc(1, 1);
+	bankControl_addUserToAcc(1, 3);
+	bankControl_addUserToAcc(3, 1);
+	bankControl_addUserToAcc(1, 2);
+	bankControl_removeUserFromAcc(2, 1);
+	bankControl_createCustomer("Andi", "Ich", "07.11.1992", "Mein Block", "Meine Straﬂe", "12a");
+	bankControl_modifyCustomer(1, "Sepp", "Du", "usw", "Mein Block", "Meine Straﬂe", "12a");
+	bankControl_deleteCustomer(1);
+	bankControl_depositMoney(1, 215);
+	bankControl_transferMoney(1,3,35);
+	bankControl_depositMoney(1,15);
+	bankControl_withdrawMoney(1,15);
 
-	//sql_execQuery("Bank", sqlCreateTableAccounts);
-
-	bankControl_createAcc(1, "MyAcc", 50);
-	bankControl_deleteAcc(2);
-	if (sql_createDatabase("my") == SQLITE_OK)
-	{
-		//result = sql_execQuery("my", sql);
-		//result = sql_execQuery("my", sql2);
-		//result = sql_execQuery("my", sql3);
-		result = ResultSet{ NULL, 0, 0 };
-	}
-	else
-		result = ResultSet{ NULL, 0, 0 };
-
-	for (unsigned int j = 0; j < result.rows; j++)
-	{
-		for (unsigned int k = 0; k < result.cols; k++)
-		{
-			printf("%s ", result.data[j][k]);
-		}
-		printf("\n");
-	}
 	logging_logError("Main terminated correctly", __FILE__);
 	
     return 0;
