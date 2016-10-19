@@ -45,7 +45,7 @@ SQLCONTROL_API int sql_createDatabase(char *dbName)
 * @params: dbName Name of the database where the statement should be executed.
 * @params: sqlStatement The SQL Statement.
 */
-SQLCONTROL_API ResultSet sql_execQuery(char *dbName, char *sqlStatement)
+SQLCONTROL_API ResultSet sql_execQuery(char *dbName, const char *sqlStatement)
 {
 	sqlite3 *db;
 	char *zErrMsg = 0;
@@ -64,7 +64,7 @@ SQLCONTROL_API ResultSet sql_execQuery(char *dbName, char *sqlStatement)
 	rc = sqlite3_exec(db, sqlStatement, callback, &a, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
-		logging_logError("SQL error: %s\n", zErrMsg);	//Write to logfile
+		logging_logError((char *)string("SQL error: " + string(zErrMsg)).c_str(), __FILE__);	//Write to logfile
 		sqlite3_free(zErrMsg);							
 		return a;
 	}

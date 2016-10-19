@@ -24,4 +24,4 @@ static int callback(void *data, int argc, char **argv, char **azColName);
 
 extern "C" SQLCONTROL_API void SQLcontrol_printVersion();
 extern "C" SQLCONTROL_API int sql_createDatabase(char *dbName);
-extern "C" SQLCONTROL_API ResultSet sql_execQuery(char *dbName, char *sqlStatement);
+extern "C" SQLCONTROL_API ResultSet sql_execQuery(char *dbName, const char *sqlStatement);

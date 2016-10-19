@@ -12,15 +12,14 @@ using namespace std;
 
 BANKCONTROL_API int bankControl_createAcc(int _accType, char *_accName, float _value)
 {
-	if (inputCheckNumbers(to_string(_accType).c_str()) &&	inputCheckChars(_accName))
+	if (inputCheckNumbers(to_string(_accType).c_str()) && inputCheckChars(_accName))
 	{
-		char *sql = "INSERT INTO ACCOUNTS(NAME,TYPE,VALUE)" \
-			"VALUES (";
-		strcat(sql, _accName);
-		strcat(sql, ",");
-		strcat(sql, to_string(_accType).c_str());
-		strcat(sql, ",");
-		strcat(sql, to_string(_value).c_str());
+		string sql = "INSERT INTO ACCOUNT(NAME,TYPE,VALUE) " \
+			"VALUES ('" + string(_accName) + "'," 
+			+ to_string(_accType) + "," 
+			+ to_string(_value) + ");";
+
+		sql_execQuery("Bank", sql.c_str());
 		int accNumber = xmlcontroler_createAccount(_accType, _value);
 		printf("Your account number is: %i", accNumber);
 		return 0;
@@ -34,7 +33,20 @@ BANKCONTROL_API int bankControl_createAcc(int _accType, char *_accName, float _v
 
 BANKCONTROL_API int bankControl_deleteAcc(int _accNumber)
 {
-	return 0;
+	if (inputCheckNumbers(to_string(_accNumber).c_str()))
+	{
+		string sql = "DELETE FROM ACCOUNT " \
+			"WHERE ACCID = " + to_string(_accNumber) + ";";
+
+		sql_execQuery("Bank", sql.c_str());
+		xmlcontroler_deleteCustomerByID(_accNumber);
+		return 0;
+	}
+	else
+	{
+		logging_logError("Illegal character in passing parameters.\n", __FILE__);
+		return -1;
+	}
 }
 
 BANKCONTROL_API int bankControl_renameAcc(int _accNumber, char * _newName)
@@ -122,7 +134,7 @@ bool inputCheckChars(const char *str)
 bool inputCheckNumbers(const char *str)
 {
 	if (str != NULL && strlen(str) >= 0 && checkIfStringContainsNumbersOnly(str))
-		return true;
-	else
 		return false;
+	else
+		return true;
 }

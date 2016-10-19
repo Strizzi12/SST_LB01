@@ -6,6 +6,7 @@
 #include "SQLcontrol.h"
 #include <string>
 #include "XMLControler.h"
+#include "BankControl.h"
 
 using namespace std;
 #pragma warning(disable:4996)
@@ -109,11 +110,16 @@ int main()
 
 	sql3 = "SELECT * from COMPANY";
 
+	//sql_execQuery("Bank", sqlCreateTableAccounts);
+
+	bankControl_createAcc(1, "MyAcc", 50);
+	bankControl_deleteAcc(2);
 	if (sql_createDatabase("my") == SQLITE_OK)
 	{
 		//result = sql_execQuery("my", sql);
 		//result = sql_execQuery("my", sql2);
-		result = sql_execQuery("my", sql3);
+		//result = sql_execQuery("my", sql3);
+		result = ResultSet{ NULL, 0, 0 };
 	}
 	else
 		result = ResultSet{ NULL, 0, 0 };

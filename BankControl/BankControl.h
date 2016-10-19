@@ -1,4 +1,6 @@
 #pragma once
+#define _SCL_SECURE_NO_WARNINGS
+
 
 #ifdef BANKCONTROL_EXPORTS
 #define BANKCONTROL_API __declspec(dllexport) 

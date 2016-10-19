@@ -204,3 +204,8 @@ ModelManifest.xml
 /SST_LB01.VC.VC.opendb
 /MathLibraryAndClient.VC.db
 /MathLibraryAndClient.VC.VC.opendb
+/BankClient/LogFile.txt
+/BankClient/my.db
+/BankClient/MyXMLFile.xml
+/BankClient/TotalBalances
+/BankClient/Bank.db
