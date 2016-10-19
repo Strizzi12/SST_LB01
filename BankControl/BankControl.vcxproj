@@ -88,6 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BANKCONTROL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\Logging;..\XMLControler;..\SQLcontrol;..\CurrencyExchange;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,6 +146,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BankControl.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -170,6 +172,20 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CurrencyExchange\CurrencyExchange.vcxproj">
+      <Project>{1b298b3f-fab5-44c3-9eb9-b0a05bd3b130}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.vcxproj">
+      <Project>{28e0cf0c-93cb-4755-9491-e6cc4a27ba7b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLcontrol\SQLcontrol.vcxproj">
+      <Project>{8abe6327-5133-4ba6-869a-06dcfe4bd817}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLControler\XMLControler.vcxproj">
+      <Project>{5390dacd-316c-4a71-877e-115d36101121}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

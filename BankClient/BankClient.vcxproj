@@ -161,23 +161,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Accounts\Accounts.vcxproj">
-      <Project>{1cc97ffa-40b7-42b2-8920-ad047ef313cf}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\CurrencyExchange\CurrencyExchange.vcxproj">
       <Project>{1b298b3f-fab5-44c3-9eb9-b0a05bd3b130}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Customer\Customer.vcxproj">
-      <Project>{c8e9f50b-d24a-419d-913c-4380b636e169}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.vcxproj">
       <Project>{28e0cf0c-93cb-4755-9491-e6cc4a27ba7b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\SQLcontrol\SQLcontrol.vcxproj">
       <Project>{8abe6327-5133-4ba6-869a-06dcfe4bd817}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Transaction\Transaction.vcxproj">
-      <Project>{73245da1-7ddc-409c-a208-363f684205b6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\XMLControler\XMLControler.vcxproj">
       <Project>{5390dacd-316c-4a71-877e-115d36101121}</Project>
