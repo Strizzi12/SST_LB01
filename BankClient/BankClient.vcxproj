@@ -161,6 +161,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BankControl\BankControl.vcxproj">
+      <Project>{014290ad-4e40-47cf-b77e-62b2ef3d5b85}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\CurrencyExchange\CurrencyExchange.vcxproj">
       <Project>{1b298b3f-fab5-44c3-9eb9-b0a05bd3b130}</Project>
     </ProjectReference>

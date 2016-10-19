@@ -1,5 +1,4 @@
 // BankControl.cpp : Definiert die exportierten Funktionen für die DLL-Anwendung.
-//
 
 #include "stdafx.h"
 #include "BankControl.h"
@@ -9,13 +8,19 @@
 #include "Logging.h"
 
 using namespace std;
+#pragma warning(disable:4996)
 
 BANKCONTROL_API int bankControl_createAcc(int _accType, char *_accName, float _value)
 {
 	if (inputCheckNumbers(to_string(_accType).c_str()) &&	inputCheckChars(_accName))
 	{
-		char *sql = "INSERT INTO ACCOUNTS(ID,NAME,AGE,ADDRESS,SALARY) "  \
-			"VALUES (1, 'Paul', 32, 'California', 20000.00 ); ";
+		char *sql = "INSERT INTO ACCOUNTS(NAME,TYPE,VALUE)" \
+			"VALUES (";
+		strcat(sql, _accName);
+		strcat(sql, ",");
+		strcat(sql, to_string(_accType).c_str());
+		strcat(sql, ",");
+		strcat(sql, to_string(_value).c_str());
 		int accNumber = xmlcontroler_createAccount(_accType, _value);
 		printf("Your account number is: %i", accNumber);
 		return 0;

@@ -101,7 +101,7 @@ static int callback(void *data, int argc, char **argv, char **azColName)
 		return EXIT_FAILURE;
 	}
 
-	for (int i = 0; i < old->rows; i++)
+	for (unsigned int i = 0; i < old->rows; i++)
 	{
 		char **temp2 = (char **)realloc(old->data[i], argc * sizeof(argv) * sizeof(*old->data[i]));
 		if (temp2) 
