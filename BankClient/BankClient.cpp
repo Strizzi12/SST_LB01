@@ -90,7 +90,7 @@ int main()
 		"ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," \
 		"FROMACC INTEGER NOT NULL," \
 		"TOACC INTEGER NOT NULL," \
-		"VALUE FLOAT NULL," \
+		"VALUE FLOAT NOT NULL," \
 		"FOREIGN KEY(FROMACC) REFERENCES ACCOUNT(ACCID)," \
 		"FOREIGN KEY(TOACC) REFERENCES ACCOUNT(ACCID));";
 
@@ -114,19 +114,20 @@ int main()
 	//bankControl_deleteAcc(2);
 	bankControl_createCustomer("Mike", "Ich", "12.34.4567", "test", "test Straﬂe", "12a");
 	bankControl_createCustomer("Hugo", "Wer", "987.987654", "Dieser Block", "Jene Straﬂe", "12a");
-	bankControl_renameAcc(1, "NewAccName");
-	bankControl_addUserToAcc(1, 1);
+	//bankControl_renameAcc(1, "NewAccName");
+	/*bankControl_addUserToAcc(1, 1);
 	bankControl_addUserToAcc(1, 3);
 	bankControl_addUserToAcc(3, 1);
 	bankControl_addUserToAcc(1, 2);
-	bankControl_removeUserFromAcc(2, 1);
+	bankControl_removeUserFromAcc(2, 1);*/
 	bankControl_createCustomer("Andi", "Ich", "07.11.1992", "Mein Block", "Meine Straﬂe", "12a");
-	bankControl_modifyCustomer(1, "Sepp", "Du", "usw", "Mein Block", "Meine Straﬂe", "12a");
+	/*bankControl_modifyCustomer(1, "Sepp", "Du", "usw", "Mein Block", "Meine Straﬂe", "12a");
 	bankControl_deleteCustomer(1);
 	bankControl_depositMoney(1, 215);
 	bankControl_transferMoney(1,3,35);
 	bankControl_depositMoney(1,15);
 	bankControl_withdrawMoney(1,15);
+	bankControl_getBankStatement(3);*/
 
 	logging_logError("Main terminated correctly", __FILE__);
 	

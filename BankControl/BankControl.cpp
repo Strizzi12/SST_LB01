@@ -6,6 +6,7 @@
 #include "XMLControler.h"
 #include "SQLControl.h"
 #include "Logging.h"
+#include <sys/stat.h> 
 
 using namespace std;
 #pragma warning(disable:4996)
@@ -119,10 +120,21 @@ BANKCONTROL_API int bankControl_createCustomer(char *_firstName, char *_lastName
 			"VALUES ('" + string(_firstName) + "','" + string(_lastName) + "','" 
 			+ string(_birthDate) + "','" + string(_plzLocation) + "','"
 			+ string(_street) + "','"	+ string(_houseNr) + "');";
-
+		
 		sql_execQuery("Bank", sql.c_str());
-		int customerNumber = xmlcontroler_createCustomer(_firstName, _lastName, _plzLocation, _street, atoi(_houseNr));
-		printf("Your customer number is: %i", customerNumber);
+
+		if (fileExists("MyXMLFile.xml"))
+			int customerNumber = xmlcontroler_createCustomer(_firstName, _lastName, _plzLocation, _street, atoi(_houseNr));
+		else
+		{
+			string sqlGetAllCustomer = "SELECT * FROM CUSTOMER;";
+			ResultSet result = sql_execQuery("Bank", sqlGetAllCustomer.c_str());
+			for (int i = 0; i < result.rows; i++)
+				xmlcontroler_createCustomer(result.data[i][1], result.data[i][2], result.data[i][4], result.data[i][5], 12);
+		}
+		//sql_execQuery("Bank", sql.c_str());
+		//int customerNumber = xmlcontroler_createCustomer(_firstName, _lastName, _plzLocation, _street, atoi(_houseNr));
+		//printf("Your customer number is: %i \n", customerNumber);
 		return 0;
 	}
 	else
@@ -311,10 +323,33 @@ BANKCONTROL_API int bankControl_withdrawMoney(int _accID, float _value)
 	}
 }
 
-BANKCONTROL_API int bankControl_getBankStatement(int accID)
+BANKCONTROL_API int bankControl_getBankStatement(int _accID)
 {
 	//What?
 	//Olle Transaktionen von am Account ausgeben
+	if (inputCheckNumbers(to_string(_accID).c_str()))
+	{
+		string sql = "SELECT * " \
+			"FROM TRANSACTIONS " \
+			"WHERE FROMACC = " + to_string(_accID) + " " +
+			"OR TOACC = " + to_string(_accID) + ";";
+
+		ResultSet result = sql_execQuery("Bank", sql.c_str());
+		if (result.rows != 0)
+			for (int i = 0; i < result.rows; i++)
+				printf("From Acc: %s to Acc: %s with value = %s \n", \
+					result.data[i][1], result.data[i][2], result.data[i][3]);
+		else
+			logging_logError("Wrong Account Number.\n", __FILE__);
+
+		xmlcontroler_getBankStatement(_accID);
+		return 0;
+	}
+	else
+	{
+		logging_logError("Illegal character in passing parameters.\n", __FILE__);
+		return -1;
+	}
 	return 0;
 }
 
@@ -367,4 +402,10 @@ bool inputCheckNumbersAndChars(const char *str)
 		return false;
 	else
 		return true;
+}
+
+inline bool fileExists(const char* name) 
+{
+	struct stat buffer;
+	return (stat(name, &buffer) == 0);
 }

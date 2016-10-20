@@ -15,6 +15,7 @@ bool checkIfStringContainsCharsAndNumbersOnly(const char *str);
 bool inputCheckChars(const char *str);
 bool inputCheckNumbers(const char *str);
 bool inputCheckNumbersAndChars(const char *str);
+inline bool fileExists(const char* name);
 
 #pragma region INTERFACES
 extern "C" BANKCONTROL_API int bankControl_createAcc(int _accType, char* _accName, float _value);

@@ -61,7 +61,7 @@ SQLCONTROL_API ResultSet sql_execQuery(char *dbName, const char *sqlStatement)
 		return a;
 
 	/* Execute SQL statement */
-	rc = sqlite3_exec(db, sqlStatement, callback, &a, &zErrMsg);
+	rc = sqlite3_exec(db, sqlStatement, callback, &a, &zErrMsg); //Letzte Spalte wird (warum auch immer) oftmals mit null zurückgegeben.
 	if (rc != SQLITE_OK)
 	{
 		logging_logError((char *)string("SQL error: " + string(zErrMsg)).c_str(), __FILE__);	//Write to logfile
@@ -118,7 +118,6 @@ static int callback(void *data, int argc, char **argv, char **azColName)
 	old->cols = argc;
 	/*Storing the data in the 2D array*/
 	for (int i = 0; i < argc; i++)
-		temp[old->rows - 1][i] = strdup(argv[i] ? argv[i] : "NULL" );	//Duplicates the strings from argv, because when we return from the callback function, the memory of those strings is freed.
-	
+		old->data[old->rows - 1][i] = strdup(argv[i] ? argv[i] : "NULL");	//Duplicates the strings from argv, because when we return from the callback function, the memory of those strings is freed.
 	return 0;
 }

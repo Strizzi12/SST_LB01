@@ -209,3 +209,5 @@ ModelManifest.xml
 /BankClient/MyXMLFile.xml
 /BankClient/TotalBalances
 /BankClient/Bank.db
+/BankClient/kStatement AccountNR
+/BankClient/ankStatement AccountNR
