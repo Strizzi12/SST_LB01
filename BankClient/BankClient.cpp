@@ -54,29 +54,42 @@ int main()
 	sql_execQuery("Bank", sqlCreateJoinAccountsTable);
 
 	/*Testapplication*/
-	bankControl_createAcc(1, "MyAcc1", 100);
+	/*bankControl_createAcc(1, "MyAcc1", 100);
 	bankControl_createAcc(1, "MyAcc2", 100);
 	bankControl_createAcc(1, "MyAcc3", 100);
 	bankControl_createAcc(1, "MyAcc4", 100);
 	bankControl_createAcc(1, "MyAcc5", 100);
 	bankControl_createAcc(1, "MyAcc6", 100);
-	bankControl_deleteAcc(6);
-	bankControl_createCustomer("Mike", "Ich", "12.34.4567", "test", "test Straﬂe", "12a");
-	bankControl_createCustomer("Hugo", "Wer", "987.987654", "Dieser Block", "Jene Straﬂe", "12a");
+	bankControl_deleteAcc(5);
+	bankControl_createCustomer("Mike", "Ich", "12.34.4567", "test", "test Strasse", "12a");
+	bankControl_createCustomer("Hugo", "Wer", "987.987654", "Dieser Block", "Jene Strasse", "12a");
 	bankControl_renameAcc(1, "NewAccName");
 	bankControl_addUserToAcc(1, 1);
 	bankControl_addUserToAcc(1, 3);
 	bankControl_addUserToAcc(3, 1);
 	bankControl_addUserToAcc(1, 2);
 	bankControl_removeUserFromAcc(2, 1);
-	bankControl_createCustomer("Andi", "Ich", "07.11.1992", "Mein Block", "Meine Straﬂe", "12a");
-	bankControl_modifyCustomer(1, "Sepp", "Du", "usw", "Mein Block", "Meine Straﬂe", "12a");
+	bankControl_createCustomer("Andi", "Ich", "07.11.1992", "Mein Block", "Meine Strasse", "12a");
+	bankControl_modifyCustomer(1, "Sepp", "Du", "usw", "Mein Block", "Meine Strasse", "12a");
 	bankControl_deleteCustomer(1);
 	bankControl_depositMoney(1, 215);
 	bankControl_transferMoney(1,3,35);
 	bankControl_depositMoney(1,15);
 	bankControl_withdrawMoney(1,15);
-	bankControl_getBankStatement(3);
+	bankControl_getBankStatement(3);*/
+
+	int x = xmlcontroler_createCustomer("test", "test","test","test",1);
+	int x1 = xmlcontroler_createCustomer("test", "test", "test", "test", 1);
+	int i = xmlcontroler_createAccount(0, 1000.0);
+	int xx = xmlcontroler_attachAccount(i, x);
+	int xx1 = xmlcontroler_attachAccount(i, x1);
+
+	xmlcontroler_closeAccount(i);
+
+	/*int* test = new int[1];
+	xmlcontroler_getAccsByCusID(x, test);*/
+	//int* test1 = reinterpret_cast<int*>(test);
+
 
 	logging_logError("Main terminated correctly", __FILE__);
 	

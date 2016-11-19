@@ -429,9 +429,6 @@ XMLCONTROLER_API int xmlcontroler_closeAccount(int tmpAccID)
 
 		if (dataFound)
 		{
-			//erase object after it was found and iterator is over
-			tmpAccList->erase(it1);
-
 			//delete account from customers
 			list<MyCustomer>* tmpCusList = dr->get_bankCustomer();
 			list<MyCustomer>::iterator cusit;
@@ -439,28 +436,35 @@ XMLCONTROLER_API int xmlcontroler_closeAccount(int tmpAccID)
 			list<BankAccount>::iterator accit;
 			list<BankAccount>::iterator accit1;
 			bool accdataFound = false;
+			bool check = true;
 
-			while (!accdataFound)
+			while (check)
 			{
+				check = false;
 				//delete the closed account from every customer
 				for (cusit = tmpCusList->begin(); cusit != tmpCusList->end(); cusit++)
 				{
-					for (accit = (*cusit).get_bankAccounts()->begin(); accit != (*cusit).get_bankAccounts()->end(); accit++)
+					for (accit = cusit->get_bankAccounts()->begin(); accit != cusit->get_bankAccounts()->end(); accit++)
 					{
-						if ((*accit).get_accID() == tmpAccID)
+						if (accit->get_accID() == tmpAccID)
 						{
 							cusit1 = cusit;
 							accit1 = accit;
 							accdataFound = true;
 						}
 					}
-				}
-				//delete the closed account from cus
-				if (accdataFound)
-				{
-					(*cusit1).removeBankAccount(*accit1);
+					//delete the closed account from cus
+					if (accdataFound)
+					{
+						cusit1->removeBankAccount(*accit1);
+						check = true;
+						accdataFound = false;
+					}
 				}
 			}
+
+			//erase object after it was found and iterator is over
+			tmpAccList->erase(it1);
 		}
 		else
 		{
@@ -545,8 +549,8 @@ XMLCONTROLER_API int xmlcontroler_manageAccount(int tmpAccID, int tmpType)
 		boost::archive::xml_oarchive oa(ofs);
 		dr->do_serialize(oa, XMLVERSION);
 
-		cout << "Account with Nr: " << tmpAccID << " was succesfully closed." << endl;
-		logging_logError("Account succesfully closed!", __FILE__);
+		cout << "Account with Nr: " << tmpAccID << " was succesfully edited." << endl;
+		logging_logError("Account succesfully edited!", __FILE__);
 		return tmpAccID;
 	}
 	catch (...)
@@ -1244,7 +1248,7 @@ XMLCONTROLER_API bool xmlcontroler_getBankStatement(int tmpAccID)
 			return false;
 		}
 
-		for (strIt = tmpTrans->begin(); strIt != tmpTrans->end();  strIt++)
+		for (strIt = tmpTrans->begin(); strIt != tmpTrans->end(); strIt++)
 		{
 			//determine case: 1 -> creation statement; 2 deposit/withdraw depending on -/+ value; 3 transfer received/sent depending on +/- value
 			//string split by http://stackoverflow.com/questions/236129/split-a-string-in-c
@@ -1259,11 +1263,28 @@ XMLCONTROLER_API bool xmlcontroler_getBankStatement(int tmpAccID)
 
 			switch (eleCnt)
 			{
-				case 1:
+			case 1:
+				try
+				{
+					bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
+					bankstatementFile << x << ". " << "Initial account (accID: " << It1->get_accID() << ") balance of " << elems[0] << endl;
+					bankstatementFile.close();
+				}
+				//general ex handling -> not nice but works, use carefully
+				catch (...)
+				{
+					logging_logError("Exception opening/writing bank statement!", __FILE__);
+					cout << "Exception opening/writing bank statement!" << endl;
+					return false;
+				}
+				break;
+			case 2:
+				if (elems[1].find("-") != string::npos)
+				{
 					try
 					{
 						bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
-						bankstatementFile << x << ". " << "Initial account (accID: " << It1->get_accID() << ") balance of " << elems[0] << endl;
+						bankstatementFile << x << ". " << "Money withdrawn: " << elems[1] << endl;
 						bankstatementFile.close();
 					}
 					//general ex handling -> not nice but works, use carefully
@@ -1273,75 +1294,58 @@ XMLCONTROLER_API bool xmlcontroler_getBankStatement(int tmpAccID)
 						cout << "Exception opening/writing bank statement!" << endl;
 						return false;
 					}
-					break;
-				case 2:
-					if (elems[1].find("-") != string::npos)
+				}
+				else
+				{
+					try
 					{
-						try
-						{
-							bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
-							bankstatementFile << x << ". " << "Money withdrawn: " << elems[1] << endl;
-							bankstatementFile.close();
-						}
-						//general ex handling -> not nice but works, use carefully
-						catch (...)
-						{
-							logging_logError("Exception opening/writing bank statement!", __FILE__);
-							cout << "Exception opening/writing bank statement!" << endl;
-							return false;
-						}
+						bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
+						bankstatementFile << x << ". " << "Money deposited: " << elems[1] << endl;
+						bankstatementFile.close();
 					}
-					else
+					//general ex handling -> not nice but works, use carefully
+					catch (...)
 					{
-						try
-						{
-							bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
-							bankstatementFile << x << ". " << "Money deposited: " << elems[1] << endl;
-							bankstatementFile.close();
-						}
-						//general ex handling -> not nice but works, use carefully
-						catch (...)
-						{
-							logging_logError("Exception opening/writing bank statement!", __FILE__);
-							cout << "Exception opening/writing bank statement!" << endl;
-							return false;
-						}
+						logging_logError("Exception opening/writing bank statement!", __FILE__);
+						cout << "Exception opening/writing bank statement!" << endl;
+						return false;
 					}
-					break;
-				case 3:
-					if (elems[2].find("-") != string::npos)
+				}
+				break;
+			case 3:
+				if (elems[2].find("-") != string::npos)
+				{
+					try
 					{
-						try
-						{
-							bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
-							bankstatementFile << x << ". " << "Money transfered to accountID " << elems[1] << " with amount: " << elems[2] << endl;
-							bankstatementFile.close();
-						}
-						//general ex handling -> not nice but works, use carefully
-						catch (...)
-						{
-							logging_logError("Exception opening/writing bank statement!", __FILE__);
-							cout << "Exception opening/writing bank statement!" << endl;
-							return false;
-						}
+						bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
+						bankstatementFile << x << ". " << "Money transfered to accountID " << elems[1] << " with amount: " << elems[2] << endl;
+						bankstatementFile.close();
 					}
-					else
+					//general ex handling -> not nice but works, use carefully
+					catch (...)
 					{
-						try
-						{
-							bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
-							bankstatementFile << x << ". " << "Money received from accountID " << elems[0] << " with amount: " << elems[2] << endl;
-							bankstatementFile.close();
-						}
-						//general ex handling -> not nice but works, use carefully
-						catch (...)
-						{
-							logging_logError("Exception opening/writing bank statement!", __FILE__);
-							cout << "Exception opening/writing bank statement!" << endl;
-							return false;
-						}
+						logging_logError("Exception opening/writing bank statement!", __FILE__);
+						cout << "Exception opening/writing bank statement!" << endl;
+						return false;
 					}
-					break;
+				}
+				else
+				{
+					try
+					{
+						bankstatementFile.open("BankStatement AccountNR " + It1->get_accID(), fstream::app);
+						bankstatementFile << x << ". " << "Money received from accountID " << elems[0] << " with amount: " << elems[2] << endl;
+						bankstatementFile.close();
+					}
+					//general ex handling -> not nice but works, use carefully
+					catch (...)
+					{
+						logging_logError("Exception opening/writing bank statement!", __FILE__);
+						cout << "Exception opening/writing bank statement!" << endl;
+						return false;
+					}
+				}
+				break;
 			default:
 				logging_logError("No account found for tmpAccID!", __FILE__);
 				cout << "No account found for tmpAccID: " << tmpAccID << " !" << endl;
@@ -1520,6 +1524,221 @@ XMLCONTROLER_API bool xmlcontroler_getBalance(int tmpCusID)
 	{
 		logging_logError("XML balance calculation error!", __FILE__);
 		cout << "Unable to calculate the balance for given customer ID!" << endl;
+		return false;
+	}
+}
+
+//returns accIDs which are attached to a customer in the outparam
+XMLCONTROLER_API bool xmlcontroler_getAccsByCusID(int tmpCusID, int* outParam)
+{
+	DataRoot *dr = DataRoot::getInstance();
+
+	//read data from file if existing
+	if (DataRoot::fileExists("MyXMLFile.xml"))
+	{
+		//reading Data from XML-file if possible
+		std::ifstream ifs("MyXMLFile.xml");
+		assert(ifs.good());
+		boost::archive::xml_iarchive ia(ifs);
+		dr->do_deserialize(ia, XMLVERSION);
+	}
+	else
+	{
+		logging_logError("XML file not found -> load error!", __FILE__);
+		cout << "XML-File not found or corrupt -> load error!" << endl;
+		//return false;
+	}
+
+	//check if cusID is valid
+	list<MyCustomer>* tmpCusList = dr->get_bankCustomer();
+	list<MyCustomer>::iterator It;
+	list<MyCustomer>::iterator It1;
+	bool IDFound = false;
+
+	for (It = tmpCusList->begin(); It != tmpCusList->end(); It++)
+	{
+		if ((*It).get_cusID() == tmpCusID)
+		{
+			//saving iterator/index
+			It1 = It;
+			IDFound = true;
+		}
+	}
+
+	if (!IDFound)
+	{
+		logging_logError("No customer found for tmpCusID!", __FILE__);
+		cout << "No customer found for tmpCusID: " << tmpCusID << " !" << endl;
+		return false;
+	}
+
+	list<BankAccount>* tmpAccLst = It1->get_bankAccounts();
+	int accCnt = tmpAccLst->size();
+	int x = 0;
+	int* tmp = new int[accCnt];
+	for (list<BankAccount>::iterator MyIt = tmpAccLst->begin(); MyIt != tmpAccLst->end(); MyIt++)
+	{
+		tmp[x] = MyIt->get_accID();
+		x++;
+	}
+
+	memcpy(outParam, tmp, sizeof(tmp));
+
+	logging_logError("xmlcontroler_getAccsByCusID terminated successfully!", __FILE__);
+	cout << "xmlcontroler_getAccsByCusID terminated successfully!" << endl;
+	return true;
+}
+
+//used for transactions from another bank (subject of SST_LB03)
+XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, float tmpValue, char* tmpPurpose)
+{
+	try
+	{
+		DataRoot *dr = DataRoot::getInstance();
+
+		//read data from file if existing
+		if (DataRoot::fileExists("MyXMLFile.xml"))
+		{
+			//reading Data from XML-file if possible
+			std::ifstream ifs("MyXMLFile.xml");
+			assert(ifs.good());
+			boost::archive::xml_iarchive ia(ifs);
+			dr->do_deserialize(ia, XMLVERSION);
+		}
+		else
+		{
+			logging_logError("XML file not found -> load error!", __FILE__);
+			cout << "XML-File not found or corrupt -> load error!" << endl;
+			//return false;
+		}
+
+		//check if FromAccID is valid
+		list<BankAccount>* tmpAccList = dr->get_bankAccount();
+		list<BankAccount>::iterator FromIt;
+		list<BankAccount>::iterator FromIt1;
+		bool fromIDFound = false;
+
+		for (FromIt = tmpAccList->begin(); FromIt != tmpAccList->end(); FromIt++)
+		{
+			if ((*FromIt).get_accID() == tmpFromAccID)
+			{
+				//saving iterator/index
+				FromIt1 = FromIt;
+				fromIDFound = true;
+			}
+		}
+
+		if (!fromIDFound)
+		{
+			logging_logError("No account found for tmpFromID!", __FILE__);
+			cout << "No account found for tmpFromID: " << tmpFromAccID << " !" << endl;
+			return false;
+		}
+
+		//check if ToAccID is valid
+		list<BankAccount>::iterator ToIt;
+		list<BankAccount>::iterator ToIt1;
+		bool toIDFound = false;
+
+		for (ToIt = tmpAccList->begin(); ToIt != tmpAccList->end(); ToIt++)
+		{
+			if ((*ToIt).get_accID() == tmpToAccID)
+			{
+				//saving iterator/index
+				ToIt1 = ToIt;
+				toIDFound = true;
+			}
+		}
+
+		if (!toIDFound)
+		{
+			logging_logError("No account found for tmpToID!", __FILE__);
+			cout << "No account found for tmpToID: " << tmpToAccID << " !" << endl;
+			return false;
+		}
+
+		//check if FromAcc has enough money to transfer
+		if ((*FromIt1).get_value() >= tmpValue)
+		{
+			float FromNewVal = -1;
+			float ToNewVal = -1;
+			try
+			{
+				float FromCurrVal = (*FromIt1).get_value();
+				float ToCurrVal = (*ToIt1).get_value();
+				FromNewVal = FromCurrVal - tmpValue;
+				ToNewVal = ToCurrVal + tmpValue;
+			}
+			catch (...)
+			{
+				logging_logError("Calculation failed - Transaction canceled without results!", __FILE__);
+				cout << "Calculation failed - Transaction canceled without results!" << endl;
+				return false;
+			}
+
+			if (FromNewVal != -1 && ToNewVal != -1)
+			{
+				(*FromIt1).set_value(FromNewVal);
+				(*ToIt1).set_value(ToNewVal);
+
+				//create transfer entries for accounts (incoming and outgoing ident. via - sign of value)
+				std::stringstream stringStream, stringStream1;
+				stringStream << (*FromIt1).get_accID() << ";" << (*ToIt1).get_accID() << "; " << (-1 * tmpValue);
+				FromIt1->get_transactions()->push_back(stringStream.str());
+
+				stringStream1 << (*FromIt1).get_accID() << ";" << (*ToIt1).get_accID() << "; " << tmpValue;
+				ToIt1->get_transactions()->push_back(stringStream1.str());
+
+				//update accounts linked in users (not nice)
+				list<MyCustomer>::iterator cusit;
+				list<BankAccount>::iterator accit;
+
+				for (cusit = dr->get_bankCustomer()->begin(); cusit != dr->get_bankCustomer()->end(); cusit++)
+				{
+					for (accit = (*cusit).get_bankAccounts()->begin(); accit != (*cusit).get_bankAccounts()->end(); accit++)
+					{
+						if ((*accit).get_accID() == tmpFromAccID)
+						{
+							(*accit).get_transactions()->push_back(stringStream.str());
+							accit->set_value(FromNewVal);
+						}
+						if ((*accit).get_accID() == tmpToAccID)
+						{
+							(*accit).get_transactions()->push_back(stringStream1.str());
+							accit->set_value(ToNewVal);
+						}
+					}
+				}
+			}
+			//not quite right (with more time a DB like transaction concept should be implemented for this usecase)
+			else
+			{
+				logging_logError("Transaction failed - Transaction canceled without results!", __FILE__);
+				cout << "Transaction failed - Transaction canceled without results!" << endl;
+				return false;
+			}
+		}
+		else
+		{
+			logging_logError("Not enough money left to transfer on tmpFromAccID!", __FILE__);
+			cout << "Not enough money left for transfer on tmpFromAccID: " << tmpFromAccID << " !" << endl;
+			return false;
+		}
+
+		//writing data to file
+		std::ofstream ofs("MyXMLFile.xml");
+		assert(ofs.good());
+		boost::archive::xml_oarchive oa(ofs);
+		dr->do_serialize(oa, XMLVERSION);
+
+		logging_logError(tmpPurpose, __FILE__);
+		cout << tmpPurpose << endl;
+		return true;
+	}
+	catch (...)
+	{
+		logging_logError("XML account dettach error!", __FILE__);
+		cout << "Unable to dettach account!" << endl;
 		return false;
 	}
 }

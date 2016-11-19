@@ -47,6 +47,8 @@ extern "C" XMLCONTROLER_API bool xmlcontroler_depositMoney(int tmpAccID, float t
 extern "C" XMLCONTROLER_API bool xmlcontroler_withdrawMoney(int tmpAccID, float tmpValue);
 extern "C" XMLCONTROLER_API bool xmlcontroler_getBankStatement(int tmpAccID);
 extern "C" XMLCONTROLER_API bool xmlcontroler_getBalance(int tmpCusID);
+extern "C" XMLCONTROLER_API bool xmlcontroler_getAccsByCusID(int tmpCusID, int* outParam);
+extern "C" XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, float tmpValue, char* tmpPurpose);
 #pragma endregion
 
 using namespace std;
