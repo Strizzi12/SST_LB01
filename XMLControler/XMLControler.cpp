@@ -1590,11 +1590,19 @@ XMLCONTROLER_API bool xmlcontroler_getAccsByCusID(int tmpCusID, int* outParam)
 }
 
 //used for transactions from another bank (subject of SST_LB03)
-XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, float tmpValue, char* tmpPurpose)
+XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, int tmpFromBIC, int tmpToBic, float tmpValue, char* tmpPurpose)
 {
 	try
 	{
 		DataRoot *dr = DataRoot::getInstance();
+
+		//check if the remoteTransaction is from/to the own bank
+		bool localOrRemote = false; // true if local ; false if extern
+		//if from and to Bic are equal then the transaction is made within the localhost´s bank
+		if (tmpFromBIC == tmpToBic)
+		{
+			localOrRemote = true;
+		}
 
 		//read data from file if existing
 		if (DataRoot::fileExists("MyXMLFile.xml"))
@@ -1639,22 +1647,25 @@ XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpTo
 		list<BankAccount>::iterator ToIt;
 		list<BankAccount>::iterator ToIt1;
 		bool toIDFound = false;
-
-		for (ToIt = tmpAccList->begin(); ToIt != tmpAccList->end(); ToIt++)
+		//only has to be done if remoteTransaction is internal
+		if (localOrRemote)
 		{
-			if ((*ToIt).get_accID() == tmpToAccID)
+			for (ToIt = tmpAccList->begin(); ToIt != tmpAccList->end(); ToIt++)
 			{
-				//saving iterator/index
-				ToIt1 = ToIt;
-				toIDFound = true;
+				if ((*ToIt).get_accID() == tmpToAccID)
+				{
+					//saving iterator/index
+					ToIt1 = ToIt;
+					toIDFound = true;
+				}
 			}
-		}
 
-		if (!toIDFound)
-		{
-			logging_logError("No account found for tmpToID!", __FILE__);
-			cout << "No account found for tmpToID: " << tmpToAccID << " !" << endl;
-			return false;
+			if (!toIDFound)
+			{
+				logging_logError("No account found for tmpToID!", __FILE__);
+				cout << "No account found for tmpToID: " << tmpToAccID << " !" << endl;
+				return false;
+			}
 		}
 
 		//check if FromAcc has enough money to transfer
@@ -1665,9 +1676,18 @@ XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpTo
 			try
 			{
 				float FromCurrVal = (*FromIt1).get_value();
-				float ToCurrVal = (*ToIt1).get_value();
 				FromNewVal = FromCurrVal - tmpValue;
-				ToNewVal = ToCurrVal + tmpValue;
+
+				float ToCurrVal = 0;
+				if (localOrRemote)
+				{
+					ToCurrVal = (*ToIt1).get_value();
+					ToNewVal = ToCurrVal + tmpValue;
+				}
+				else
+				{
+					ToNewVal = 0;
+				}
 			}
 			catch (...)
 			{
@@ -1679,16 +1699,31 @@ XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpTo
 			if (FromNewVal != -1 && ToNewVal != -1)
 			{
 				(*FromIt1).set_value(FromNewVal);
-				(*ToIt1).set_value(ToNewVal);
+				if (localOrRemote)
+				{
+					(*ToIt1).set_value(ToNewVal);
+				}
 
 				//create transfer entries for accounts (incoming and outgoing ident. via - sign of value)
 				std::stringstream stringStream, stringStream1;
-				stringStream << (*FromIt1).get_accID() << ";" << (*ToIt1).get_accID() << "; " << (-1 * tmpValue);
-				FromIt1->get_transactions()->push_back(stringStream.str());
+				if (localOrRemote)
+				{
+					stringStream << tmpFromAccID << ";" << tmpToAccID << " local bank account" << "; " << (-1 * tmpValue);
+					FromIt1->get_transactions()->push_back(stringStream.str());
+				}
+				else
+				{
+					stringStream << tmpFromAccID << ";" << tmpToAccID << " remote bank account" << "; " << (-1 * tmpValue);
+					FromIt1->get_transactions()->push_back(stringStream.str());
+				}
 
-				stringStream1 << (*FromIt1).get_accID() << ";" << (*ToIt1).get_accID() << "; " << tmpValue;
-				ToIt1->get_transactions()->push_back(stringStream1.str());
 
+				if (localOrRemote)
+				{
+					stringStream1 << tmpFromAccID << ";" << tmpToAccID << "; " << tmpValue;
+					ToIt1->get_transactions()->push_back(stringStream1.str());
+				}
+				
 				//update accounts linked in users (not nice)
 				list<MyCustomer>::iterator cusit;
 				list<BankAccount>::iterator accit;
@@ -1702,10 +1737,13 @@ XMLCONTROLER_API bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpTo
 							(*accit).get_transactions()->push_back(stringStream.str());
 							accit->set_value(FromNewVal);
 						}
-						if ((*accit).get_accID() == tmpToAccID)
+						if (localOrRemote)
 						{
-							(*accit).get_transactions()->push_back(stringStream1.str());
-							accit->set_value(ToNewVal);
+							if ((*accit).get_accID() == tmpToAccID)
+							{
+								(*accit).get_transactions()->push_back(stringStream1.str());
+								accit->set_value(ToNewVal);
+							}
 						}
 					}
 				}
